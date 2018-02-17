@@ -63,6 +63,8 @@ public:
 	
 	inline void AddPoint( const Vector& point );
 	
+	inline bool LineIntersection( Vector beg, Vector end, Vector& intersection );
+	
 	inline void SetMin( const Vector& min_ );
 	inline void SetMax( const Vector& max_ );
 	inline void Set( const Vector& min_, const Vector& max_ );

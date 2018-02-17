@@ -184,6 +184,81 @@ inline void AABB::AddPoint( const Vector& point )
 	else if( point.z > max.z )		max.z = point.z;
 }
 
+#ifndef EPSILON
+#define EPSILON 0.0001f
+#define FNJUEIHFUIOFHFUILEFHUILSfhuirsgfiugufiuif
+#endif
+inline bool AABB::LineIntersection( Vector beg, Vector end, Vector& intersection )
+{
+	Vector bot = min - beg;		// bottom
+	Vector size = max - min;
+	Vector dir = end - beg;
+	Vector top = bot + size;
+	
+	Vector temp;
+	float t = 1.0f, tempf;
+	if( t < 0.1f )
+		return false;
+	bool collide = false;
+	
+	for( int i = 0; i < 3; ++i )
+	{
+		if( dir[i] < -EPSILON  || dir[i] > EPSILON )
+		{
+			tempf = bot[i] / dir[i];
+			temp = dir * tempf;
+			if( temp[(i+1)%3] <= top[(i+1)%3] )
+			{
+				if( temp[(i+2)%3] <= top[(i+2)%3] )
+				{
+					if( temp[(i+1)%3] >= bot[(i+1)%3] )
+					{
+						if( temp[(i+2)%3] >= bot[(i+2)%3] )
+						{
+							if( collide == false || tempf < t )
+							{
+								collide = true;
+								t = tempf;
+							}
+						}
+					}
+				}
+			}
+			
+			tempf = top[i] / dir[i];
+			temp = dir * tempf;
+			if( temp[(i+1)%3] <= top[(i+1)%3] )
+			{
+				if( temp[(i+2)%3] <= top[(i+2)%3] )
+				{
+					if( temp[(i+1)%3] >= bot[(i+1)%3] )
+					{
+						if( temp[(i+2)%3] >= bot[(i+2)%3] )
+						{
+							if( collide == false || tempf < t )
+							{
+								collide = true;
+								t = tempf;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	if( collide )
+	{
+		intersection = beg + ( dir * t );
+		return true;
+	}
+	return false
+}
+#ifdef FNJUEIHFUIOFHFUILEFHUILSfhuirsgfiugufiuif
+#undef EPSILON
+#undef FNJUEIHFUIOFHFUILEFHUILSfhuirsgfiugufiuif
+#endif
+
 inline void AABB::SetMin( const Vector& min_ )
 {
 	min = min_;
