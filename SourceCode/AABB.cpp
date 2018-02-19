@@ -184,10 +184,6 @@ inline void AABB::AddPoint( const Vector& point )
 	else if( point.z > max.z )		max.z = point.z;
 }
 
-#ifndef EPSILON
-#define EPSILON 0.0001f
-#define FNJUEIHFUIOFHFUILEFHUILSfhuirsgfiugufiuif
-#endif
 inline bool AABB::LineIntersection( Vector beg, Vector end, Vector& intersection )
 {
 	Vector bot = min - beg;		// bottom
@@ -203,7 +199,7 @@ inline bool AABB::LineIntersection( Vector beg, Vector end, Vector& intersection
 	
 	for( int i = 0; i < 3; ++i )
 	{
-		if( dir[i] < -EPSILON  || dir[i] > EPSILON )
+		if( dir[i] < -ROUNDING_ERROR  || dir[i] > ROUNDING_ERROR )
 		{
 			tempf = bot[i] / dir[i];
 			temp = dir * tempf;
@@ -254,10 +250,6 @@ inline bool AABB::LineIntersection( Vector beg, Vector end, Vector& intersection
 	}
 	return false
 }
-#ifdef FNJUEIHFUIOFHFUILEFHUILSfhuirsgfiugufiuif
-#undef EPSILON
-#undef FNJUEIHFUIOFHFUILEFHUILSfhuirsgfiugufiuif
-#endif
 
 inline void AABB::SetMin( const Vector& min_ )
 {

@@ -24,6 +24,10 @@
 #include "Vector.h"
 #include "Quat.h"
 
+#ifndef ROUNDING_ERROR
+#define ROUNDING_ERROR 0.00001f
+#endif
+
 class AABB
 {
 private:

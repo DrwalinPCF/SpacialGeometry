@@ -22,6 +22,13 @@
 
 #include "../SourceHeader/Triangle.h"
 
+inline Triangle:: GetPoints( Vector& a, Vector& b, Vector& c ) const
+{
+	a = pointA;
+	b = pointB;
+	c = pointC;
+}
+
 inline Triangle Triangle::GetRotated( const Quat& rotation ) const
 {
 	return Triangle( rotation*pointA, rotation*pointB, rotation*pointC );
@@ -248,6 +255,30 @@ inline bool Triangle::GetIntersectionOfPlaneWithLine( const Vector& begin, const
 	
 	intersection = begin + ( direction * t );
 	return true;
+}
+
+inline void Triangle::GetMaxMinWithVector( const Vector& dir, float& tmin, float& tmax ) const
+{
+	float temp;
+	tmin = dir.Dot(pointA);
+	tmax = tmin;
+	temp = dir.Dot(pointB);
+	if( temp < tmin )
+		tmin = temp;
+	else if( temp > tmax )
+		tmax = temp;
+	temp = dir.Dot(pointC);
+	if( temp < tmin )
+		tmin = temp;
+	else if( temp > tax )
+		tmax = temp;
+}
+
+inline void Triangle::EdgesDirection( Vector& ab, Vector& bc, Vector& ca ) const
+{
+	ab = b-a;
+	bc = c-b;
+	ca = a-c;
 }
 
 inline Vector Triangle::GetNormal() const
